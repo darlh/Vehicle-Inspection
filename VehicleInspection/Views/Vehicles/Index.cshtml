@@ -1,0 +1,99 @@
+﻿@model IEnumerable<VehicleInspection.Models.Vehicle>
+
+@{
+    ViewBag.Title = "Vehicles";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table" id="vehicles">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleTypeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastInspect)
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleType.Type)
+                </td>
+                <td>
+                        @item.LastInspect
+                </td>
+                <td>
+                    @Html.ActionLink("View Log","Index","Inspections", new { item.Id } , new { @class = "btn btn-primary" })
+                </td>
+                <td>
+                    @Html.ActionLink("Edit","Edit","Vehicles", new { item.Id}, new { @class = "btn btn-default"})
+                </td>
+                <td>
+                    <button class="btn btn-danger js-delete" data-vehicle-id="@item.Id" data-vehicle-unit="@item.UnitNumber">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+    
+
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            $("#vehicles").on("click", ".js-delete", function () {
+                var deleteButton = $(this);
+
+                bootbox.confirm({
+                    title: "Delete " + deleteButton.attr("data-vehicle-unit") + "?",
+                    message: "Are you sure you want to delete vehicle " + deleteButton.attr("data-vehicle-unit") + "? The vehicle and its log will be permanently deleted.",
+                    buttons: {
+                        confirm: {
+                            label: 'Delete',
+                            className: 'btn-danger'
+                        },
+                        cancel: {
+                            label: 'Cancel',
+                            className: 'btn-default'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result)
+                        {
+                            $.ajax({
+                                url: "/Api/Vehicles/" + deleteButton.attr("data-vehicle-id"),
+                                method: "DELETE",
+                                success: function () {
+                                    deleteButton.parents("tr").remove();
+                                }
+                            });
+                        }
+                        
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+

@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+
+<div class="jumbotron">
+    <h1>Daily Inspection</h1>
+    <p class="lead">Please inspect your vehicle daily before starting your shift.</p>
+    <p>@Html.ActionLink("Start \u00BB", "Create", "Inspections", null, new { @class = "btn btn-primary btn-lg" })</p>
+</div>
+
+<div class="row">
+
+    <div class="col-md-4">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h2 class="panel-title">Manage Users</h2>
+            </div>
+            <div class="panel-body">
+                <p>Add or remove a driver, create/edit their pin and manage administrator privilages.</p>
+                <p id="users">@Html.ActionLink("Users \u00BB", "Index", "ApplicationUsers", null, new { @class = "btn btn-primary" })</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h1 class="panel-title">Manage Vehicles</h1>
+            </div>
+            <div class="panel-body">
+                <p>Add and remove fleet vehicles. View individual vehicle logs.</p>
+                <p id="vehicles">@Html.ActionLink("Vehicles \u00BB", "Index", "Vehicles", null, new { @class = "btn btn-primary" })</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h1 class="panel-title">Vehicle Logs</h1>
+            </div>
+            <div class="panel-body">
+                <p>View vehicle logs that includes all past inspections.</p>
+                <p id="logs">@Html.ActionLink("Logs \u00BB", "IndexAll", "Inspections", null, new { @class = "btn btn-primary" })</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    #logs {
+        background: url("res/logs_icon.png") no-repeat center right;
+        padding: 7px 7px 7px 7px;
+    }
+    #users {
+        background: url("res/users_icon.png") no-repeat center right;
+        padding: 7px 7px 7px 7px;
+    }
+    #vehicles {
+        background: url("res/van_icon.png") no-repeat center right;
+        padding: 7px 7px 7px 7px;
+    }
+</style>

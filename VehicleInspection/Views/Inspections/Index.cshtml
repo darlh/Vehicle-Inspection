@@ -1,0 +1,175 @@
+﻿@{
+    ViewBag.Title = "Daily Inspection Log";
+}
+
+@{ var id = ViewData["vId"];}
+
+<h2>@ViewBag.Title</h2>
+<i>**Bookmark this page for future reference**</i>
+
+<p>
+    @*@using (Html.BeginForm("Index", "Inspections"))
+        {
+        <div class="col-md-2">
+            @Html.DropDownList("VehicleId", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            @Html.ActionLink("Go","Index","Inspections",null,new { @class = "btn btn-default"})
+        </div>
+        }*@
+</p>
+
+<table class="table" style="width:100%" id="logTable">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Vehicle</th>
+            <th>Mileage</th>
+            <th>Tires</th>
+            <th>Brakes</th>
+            <th>Fluids</th>
+            <th>Lights</th>
+            <th>Windshield</th>
+            <th>Exterior</th>
+            <th>Interior</th>
+            <th>Supplies</th>
+            <th>Notes</th>
+            <th>Issues</th>
+            <th>Image(s)</th>
+        </tr>
+    </thead>
+
+    <tbody></tbody>
+
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#logTable").DataTable({
+                responsive: true,
+                ajax: {
+                    url: "/api/inspections/"+@id,
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "timestamp",
+                        "render": function (data) {
+                            var date = new Date(data);
+                            return ((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear());
+                        },
+                        width: "50"
+                    },
+                    {
+                        data: "name",
+                        width: "150"
+                    },
+                    {
+                        data: "vehicle.unitNumber",
+                        width: "50"
+                    },
+                    {
+                        data: "mileage",
+                        width: "50"
+                    },
+                    {
+                        data: "tires",
+                        render: function (data) {
+                            return (data === true) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>';
+                        },
+                        sortable: false,
+                        searchable: false,
+                        className: "none"
+                    },
+                    {
+                        data: "brakes",
+                        render: function (data) {
+                            return (data === true) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>';
+                        },
+                        sortable: false,
+                        searchable: false,
+                        className: "none"
+                    },
+                    {
+                        data: "fluids",
+                        render: function (data) {
+                            return (data === true) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>';
+                        },
+                        sortable: false,
+                        searchable: false,
+                        className: "none"
+                    },
+                    {
+                        data: "lights",
+                        render: function (data) {
+                            return (data === true) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>';
+                        },
+                        sortable: false,
+                        searchable: false,
+                        className: "none"
+                    },
+                    {
+                        data: "windshield",
+                        render: function (data) {
+                            return (data === true) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>';
+                        },
+                        sortable: false,
+                        searchable: false,
+                        className: "none"
+                    },
+                    {
+                        data: "exterior",
+                        render: function (data) {
+                            return (data === true) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>';
+                        },
+                        sortable: false,
+                        searchable: false,
+                        className: "none"
+                    },
+                    {
+                        data: "interior",
+                        render: function (data) {
+                            return (data === true) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>';
+                        },
+                        sortable: false,
+                        searchable: false,
+                        className: "none"
+                    },
+                    {
+                        data: "supplies",
+                        render: function (data) {
+                            return (data === true) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>';
+                        },
+                        sortable: false,
+                        searchable: false,
+                        className: "none"
+                    },
+                    {
+                        data: "notes",
+                        width: "300",
+                        className: "not-mobile"
+                    },
+                    {
+                        data: "issues",
+                        width: "300",
+                        className: "not-mobile"
+                    },
+                    {
+                        data: "inspectionID",
+                        render: function (data, type, inspection) {
+                            if (inspection.hasImages == false) { return ""; }
+                            else {
+                                return '<a href="/Inspections/ViewImages/' + data + '">View Image(s)</a>';
+                            }
+                        }
+                    },
+                ],
+                "order": [[0, "desc"]]
+            });
+        });
+    </script>
+}
+

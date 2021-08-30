@@ -1,0 +1,94 @@
+﻿@model VehicleInspection.Models.RegisterViewModel
+@{
+    /**/
+
+    ViewBag.Title = "Register";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create a new user</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", pattern = "[0-9]*", inputmode = "numeric" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", pattern = "[0-9]*", inputmode = "numeric" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-xs-offset-2 col-xs-10">
+            <div class="checkbox">
+                @Html.CheckBoxFor(m => m.IsManager)
+                @Html.LabelFor(m => m.IsManager)
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-default" })
+            <input type="submit" class="btn btn-primary" value="Register" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+            $(document).ready(function () {
+                $('form').submit(function (e) {
+                    var currentForm = this;
+                    e.preventDefault();
+                    bootbox.confirm({
+                        title: "Confirm Submit",
+                        message: "An email notification will be sent to the new user with log in information and instructions.",
+                        buttons: {
+                            confirm: {
+                                label: 'Confirm',
+                                className: 'btn-primary'
+                            },
+                            cancel: {
+                                label: 'Cancel',
+                                className: 'btn-default'
+                            }
+                        },
+                        callback: function (result) {
+                            if (result) {
+                                currentForm.submit();
+                            }
+                        }
+                    });
+                });
+            }
+            );
+    </script>
+}

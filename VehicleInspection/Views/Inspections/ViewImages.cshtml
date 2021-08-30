@@ -1,0 +1,21 @@
+﻿@model IEnumerable<VehicleInspection.Models.Image>
+
+@{
+    ViewBag.Title = "Inspection Images";
+}
+
+<h2> Inspection Images</h2>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <a href="@Url.Content(item.ImagePath)">
+                    <img src="@Url.Content(item.ImagePath)" style="width: 100%;" />
+                </a>
+            </div>
+        </div>
+    }
+</div>
+

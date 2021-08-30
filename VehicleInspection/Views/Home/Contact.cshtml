@@ -1,0 +1,64 @@
+﻿@model VehicleInspection.Models.ContactViewModel
+@{
+    ViewBag.Title = "Feedback";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (ViewBag.StatusMessage != "")
+{
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        @ViewBag.StatusMessage
+    </div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>Send your comments to the developer</h4>
+        <p>
+            This web app is still under development and is constantly being updated. Let me know what you think. What features do you like? What features do you wish it had?
+            Is it easy to use? How could the look and feel be improved? I would love to here any comments or suggestions you may have.
+            Use the dialog box below to write your comments.
+        </p>
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(m => m.FromName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.FromName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FromName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.FromEmail, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.FromEmail, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FromEmail, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.EmailMessage, "Feedback", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => m.EmailMessage, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.EmailMessage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Send" />
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+

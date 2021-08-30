@@ -1,0 +1,38 @@
+﻿@model VehicleInspection.Models.ChangeSubscriptionsViewModel
+
+@{
+    ViewBag.Title = "Change Subscriptions";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Edit your subscription preferences</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.IsSubscribedIssues)
+                    @Html.LabelFor(model => model.IsSubscribedIssues)
+                    @Html.ValidationMessageFor(model => model.IsSubscribedIssues, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "Index")
+</div>
